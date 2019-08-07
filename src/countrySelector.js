@@ -10,28 +10,41 @@ class CountrySelector extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
       }
     
-      handleChange(event) {
-        this.setState({value: event.target.value});
-        this.setState({value2: event.target.value2});
-        this.setState({value3: event.target.value3});
+      handleChange(event, targetState) {
+        switch(targetState) {
+            case 'value': 
+            this.setState({
+                value: event.target.value
+            })
+            break
+            case 'value2': 
+            this.setState({
+                value: event.target.value
+            })
+            break
+            case 'value3': 
+            this.setState({
+                value: event.target.value
+            })
+            break
+            default:break
+        }
       }
     
       handleSubmit(event) {
-        console.log('Book Title: ' + this.state.value);
-        console.log('Your Filter is: ' + this.state.value2);
-        console.log('Print Type: ' + this.state.value3);
         event.preventDefault();
+        this.props.callApi(this.state)
       }
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
           Name of Book: 
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
+          <input type="text" value={this.state.value} onChange={(event) => this.handleChange(event, "value")} />
         </label>
         <label>
           Filter: 
-          <select value2={this.state.value2} onChange={this.handleChange}>
+          <select value2={this.state.value2} onChange={(event) => this.handleChange(event, "value2")}>
             <option value2="No Filter">No Filter</option>
             <option value2="Free">Free</option>
             <option value2="eBook">eBook</option>
@@ -40,7 +53,7 @@ class CountrySelector extends Component {
         </label>
         <label>
           Print Type: 
-          <select value3={this.state.value3} onChange={this.handleChange}>
+          <select value3={this.state.value3} onChange={(event) => this.handleChange(event, "value3")}>
             <option value3="All">All</option>
           </select>
         </label>
